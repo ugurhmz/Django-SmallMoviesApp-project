@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+{{ name }}
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Fluid Jumbotron</h1>
+        <p class="lead">Lorem ipsum dolor sit amet.</p>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% if  movies %} <!-- Bize gelen film varsa-->
+                {% for movie in movies%}<!--  gelen film  sayısı kadar...-->
+                            
+                    <div class="card mb-3">
+                        <div class="row">
+                            <!--col-3 -->
+                            <div class="col-md-3">
+                                <img src="{% static movie.get_image_path %}" class="card-img" alt="">
+                            </div>
+                            <!--end col-3 -->
+
+                            <!--col-9 -->
+                            <div class="col-md-9">
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                                <a href="{%  url 'detail' movie.id    %}"><b>{{ movie.name }}</b></a>
+                                        </div>
+                                        <p class="card-text">
+                                            {{ movie.description }}
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                {{ movie.created_date | timesince }}
+                                            </small>
+                                        </p>
+                                    </div>
+                            </div>
+                            <!--end col-9 -->
+
+                        </div>
+                    </div>
+
+                {%endfor%}
+
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>No Movies....</p>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

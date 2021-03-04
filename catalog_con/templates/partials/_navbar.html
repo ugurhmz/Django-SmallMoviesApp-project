@@ -1,0 +1,109 @@
+{% load  static %}
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2" href="{% url 'index' %}">
+        <img src="{% static 'img/bc.jpg' %}" alt="">
+
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <ul class="nav nav-pills mb-3 me-auto " id="pills-tab" role="tablist">
+
+          
+
+            <li class="nav-item  " role="presentation">
+              <a 
+                  {% if request.path == '/' %}
+                      class="nav-link active fs-5 bg-light text-dark fw-bold"
+                  {% else %}
+                    class="nav-link text-warning fs-5"
+
+                  {% endif %}
+              aria-current="page" href="{% url 'index' %}">Home</a>
+            </li> <!-- Home-->
+
+            <li class="nav-item" role="presentation">
+              <a 
+                {% if 'about' in request.path %}
+                    class="nav-link active fs-5 bg-light text-dark fw-bold"
+                {% else %}
+                    class="nav-link text-warning fs-5"
+
+                {% endif %}
+
+              href="{% url 'about' %}">About</a>
+            </li> <!-- About-->
+
+            <li class="nav-item" role="presentation">
+              <a 
+                {% if 'movies' in request.path %}
+                    class="nav-link active fs-5 bg-light text-dark fw-bold"
+                {% else %}
+                    class="nav-link text-warning fs-5"
+
+                {% endif %}
+
+              href="{% url 'movies' %}">Movies</a>
+            </li> <!-- Movies-->
+
+        </ul>
+        <!-- 2.ul KAYIT ---------------------------------------------->
+        <ul class="nav nav-pills mb-3 me-auto " id="pills-tab" role="tablist">
+              
+            {% if user.is_authenticated %}
+                  <li class="nav-item" role="presentation">
+                    <a   class="nav-link text-warning fs-5" tabindex="-1"  href="javascript:{document.getElementById('logout').submit()}">
+                         <span class="strong"> ({{user.username}})</span>   Log Out
+                    </a>
+
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                  </li>
+              
+            {% else %}
+                  <li class="nav-item" role="presentation">
+                    <a
+                    {% if 'login' in request.path %}
+                      class="nav-link active fs-5 bg-light text-dark fw-bold"
+                    {% else %}
+                      class="nav-link text-warning fs-5"
+                    {% endif  %}  
+
+                    href="{% url 'login' %}">Login</a>
+                </li> <!-- Login -->
+
+                <li class="nav-item" role="presentation">
+                    <a
+                    {% if 'register' in request.path %}
+                      class="nav-link active fs-5 bg-light text-dark fw-bold"
+                    {% else %}
+                      class="nav-link text-warning fs-5"
+                    {% endif  %}  
+
+                    href="{% url 'register' %}">Register</a>
+                </li> <!-- Register-->
+
+            {% endif %}
+            
+
+        </ul>
+      
+
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    
+   
+  </nav>
+</header>
